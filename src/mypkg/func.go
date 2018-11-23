@@ -1,22 +1,40 @@
 package main
 
-import (
-   "fmt"  
-)
+import "fmt"
 
-/* 定义结构体 */
-type Circle struct {
-  radius float64
+/**传递引用*/
+func swapRef(x *int, y *int) {
+	var temp int
+	temp = *x /* 保持 x 地址上的值 */
+	*x = *y   /* 将 y 值赋给 x */
+	*y = temp /* 将 temp 值赋给 y */
 }
 
-func abc() {
-  var c1 Circle
-  c1.radius = 10.00
-  fmt.Println("圆的面积 = ", c1.getArea())
+/**多返回值*/
+func swap(x, y string) (string, string) {
+	return y, x
 }
 
-//该 method 属于 Circle 类型对象中的方法
-func (c Circle) getArea() float64 {
-  //c.radius 即为 Circle 类型对象中的属性
-  return 3.14 * c.radius * c.radius
+func testAnonymousFun() {
+	/* nextNumber 为一个函数，函数 i 为 0 */
+	nextNumber := getSequence()
+
+	/* 调用 nextNumber 函数，i 变量自增 1 并返回 */
+	fmt.Println(nextNumber())
+	fmt.Println(nextNumber())
+	fmt.Println(nextNumber())
+
+	/* 创建新的函数 nextNumber1，并查看结果 */
+	nextNumber1 := getSequence()
+	fmt.Println(nextNumber1())
+	fmt.Println(nextNumber1())
+}
+
+/**匿名函数，共用变量*/
+func getSequence() func() int {
+	i := 0
+	return func() int {
+		i += 1
+		return i
+	}
 }
